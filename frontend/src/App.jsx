@@ -9,15 +9,11 @@
  * Funcionalidades:
  */
 
-import Rotas from "./rotas/Rotas"
+import React from 'react';
+import Rotas from './routes/Rotas.jsx';
 
 function App() {
-
-  return (
-   <>
-   <Rotas/>
-   </>
-  )
+  return <Rotas />;
 }
 
-export default App
+export default App;
