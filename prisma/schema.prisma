@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -20,4 +19,8 @@ model Cliente {
   endereco  String
   telefone  String
   email     String  @unique
+  senha     String  
+  updatedAt DateTime @updatedAt
+
+  @@map("clientes") 
 }
