@@ -14,13 +14,70 @@ datasource db {
 }
 
 model Cliente {
-  id        Int     @id @default(autoincrement())
-  nome      String
-  endereco  String
-  telefone  String
-  email     String  @unique
-  senha     String  
-  updatedAt DateTime @updatedAt
+  id         Int       @id @default(autoincrement())
+  nome       String
+  endereco   String
+  telefone   String
+  email      String   @unique
+  senha      String   @db.VarChar(255)
+  createdAt  DateTime @default(now()) 
+  updatedAt  DateTime @updatedAt
+
+  ordensServico OrdemServico[]  
 
   @@map("clientes") 
 }
+
+
+model Funcionario {
+  id               Int       @id @default(autoincrement())
+  nome             String    @db.VarChar(100)
+  senha            String    @db.VarChar(255) 
+  cargo            String?   @db.VarChar(50)        
+  email            String    @unique @db.VarChar(100)
+  dataContratacao  DateTime  @db.Date
+  salario          Decimal   @db.Decimal(10, 2)
+  especialidade    String?   @db.VarChar(100)       
+  ativo            Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  alocacoes Alocacao[]
+
+  @@map("funcionarios")
+}
+
+model OrdemServico {
+  id                    Int        @id @default(autoincrement())
+  nome                  String     @db.VarChar(100)    
+  descricao             String?    @db.Text              
+  dataInicio            DateTime   @db.Date              
+  dataPrevistaTermino   DateTime?  @db.Date              
+  status                String     @db.VarChar(20)   
+  
+  clienteId             Int
+  
+  cliente      Cliente    @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  alocacoes    Alocacao[]
+
+  @@map("ordens_servico")
+}
+
+
+model Alocacao {
+  funcionarioId   Int
+  ordemServicoId  Int
+  horasTrabalhadas Decimal? @default(0) @db.Decimal(4, 2)          
+  observacoes      String?  @db.Text
+  papel            String?  @db.VarChar(50)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  funcionario  Funcionario  @relation(fields: [funcionarioId], references: [id], onDelete: Cascade)
+  ordemServico OrdemServico @relation(fields: [ordemServicoId], references: [id], onDelete: Cascade)
+
+  @@id([funcionarioId, ordemServicoId])
+  @@map("alocacoes")
+}
+
+

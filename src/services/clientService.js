@@ -5,7 +5,7 @@ import { findClientByEmail, createClient } from '../repositories/clientRepositor
 export async function registerUserService(data) {
   const { nome, endereco, telefone, email, senha } = data;
 
-
+// condicao de email
   const clienteExistente = await findClientByEmail(email);
 
   if (clienteExistente) {
