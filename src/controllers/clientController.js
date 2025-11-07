@@ -1,4 +1,3 @@
-// src/controllers/clientController.js
 import prisma from '../config/prisma.js';
 import bcrypt from 'bcryptjs';
 
