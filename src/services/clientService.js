@@ -5,44 +5,24 @@ import { findClientByEmail, createClient } from '../repositories/clientRepositor
 export async function registerUserService(data) {
   const { nome, endereco, telefone, email, senha } = data;
 
-// condicao de email
-  const clienteExistente = await findClientByEmail(email);
 
-  if (clienteExistente) {
-    throw new Error('Este e-mail já está cadastrado.');
+  if (!nome || !email || !senha) {
+    throw new Error('Nome, email e senha são obrigatórios.');
   }
 
- 
-  const hashedPassword = await bcrypt.hash(senha, 10);
+  const clienteExistente = await findClientByEmail(email);
+  if (clienteExistente) {
+    throw new Error('Não foi possível completar o cadastro.');
+  }
+
+  const hashedPassword = await bcrypt.hash(senha, 12);
 
 
   return await createClient({
-    nome,
-    endereco,
-    telefone,
-    email,
+    nome: nome.trim(),
+    logradouro: endereco, 
+    telefone: telefone?.trim(),
+    email: email.toLowerCase().trim(),
     senha: hashedPassword,
   });
-}
-
-
-export async function loginUserService(data) {
-  const { email, senha } = data;
-
-  
-  const cliente = await findClientByEmail(email);
-
-  if (!cliente) {
-    throw new Error('Credenciais inválidas.');
-  }
-
-
-  const isPasswordValid = await bcrypt.compare(senha, cliente.senha);
-
-  if (!isPasswordValid) {
-    throw new Error('Credenciais inválidas.');
-  }
-
- 
-  return cliente;
 }

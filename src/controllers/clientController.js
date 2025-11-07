@@ -51,7 +51,7 @@ export async function loginClient(req, res) {
   try {
     const { email, senha } = req.body;
 
-    const client = await prisma.cliente.findUnique({  // ✅ cliente
+    const client = await prisma.cliente.findUnique({ 
       where: { email }
     });
 
@@ -135,7 +135,7 @@ export async function updateClient(req, res) {
     const { id } = req.params;
     const { nome, email, endereco, telefone } = req.body;
 
-    const client = await prisma.cliente.update({  // ✅ cliente
+    const client = await prisma.cliente.update({ 
       where: { id: parseInt(id) },
       data: {
         nome,
