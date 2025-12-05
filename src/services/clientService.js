@@ -15,7 +15,7 @@ export async function registerUserService(data) {
     throw new Error('Não foi possível completar o cadastro.');
   }
 
-  const hashedPassword = await bcrypt.hash(senha, 12);
+  const hashedPassword = await bcrypt.hash(senha, 8);
 
 
   return await createClient({

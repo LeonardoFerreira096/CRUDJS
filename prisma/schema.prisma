@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,10 +15,12 @@ model Cliente {
   telefone       String
   email          String         @unique
   senha          String         @db.VarChar(255)
+  role           String         @default("cliente") @db.VarChar(20)
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   ordens_servico OrdemServico[]
 
+  @@index([email])
   @@map("clientes")
 }
 
@@ -27,6 +30,7 @@ model Funcionario {
   senha           String     @db.VarChar(255)
   cargo           String?    @db.VarChar(50)
   email           String     @unique @db.VarChar(100)
+  role            String     @default("funcionario") @db.VarChar(20)
   dataContratacao DateTime   @db.Date
   salario         Decimal    @db.Decimal(10, 2)
   especialidade   String?    @db.VarChar(100)
@@ -35,6 +39,8 @@ model Funcionario {
   updatedAt       DateTime   @updatedAt
   alocacoes       Alocacao[]
 
+  @@index([email])
+  @@index([ativo])
   @@map("funcionarios")
 }
 
@@ -49,6 +55,10 @@ model OrdemServico {
   alocacoes           Alocacao[]
   clientes            Cliente    @relation(fields: [clienteId], references: [id], onDelete: Cascade)
 
+  @@index([clienteId])
+  @@index([status])
+  @@index([dataInicio])
+  @@index([clienteId, status])
   @@map("ordens_servico")
 }
 
@@ -64,5 +74,7 @@ model Alocacao {
   ordens_servico   OrdemServico @relation(fields: [ordemServicoId], references: [id], onDelete: Cascade)
 
   @@id([funcionarioId, ordemServicoId])
+  @@index([funcionarioId])
+  @@index([ordemServicoId])
   @@map("alocacoes")
 }
