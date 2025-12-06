@@ -1,7 +1,7 @@
 import prisma from '../config/prisma.js';
 import bcrypt from 'bcryptjs';
 
-// ======== CLIENTE CONTROLLER ========
+
 export async function createClient(req, res) {
   try {
     const { nome, email, senha, endereco, telefone } = req.body;

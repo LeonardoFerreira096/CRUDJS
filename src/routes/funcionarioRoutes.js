@@ -13,21 +13,21 @@ import { verificaToken, verificaRole } from '../middleware/authMiddleware.js';
 
 const router = Router();
 
-// ==================== ROTAS PÚBLICAS ====================
-// Cadastro de funcionário (sem autenticação)
+
+
 router.post('/register', funcionarioController.create);
 
-// ==================== ROTAS PROTEGIDAS (Admin) ====================
-// Listar todos os funcionários
+
+
 router.get('/', verificaToken, verificaRole('admin'), funcionarioController.getAll);
 
-// Buscar funcionário por ID
+
 router.get('/:id', verificaToken, verificaRole('admin'), funcionarioController.getById);
 
-// Atualizar funcionário
+
 router.put('/:id', verificaToken, verificaRole('admin'), funcionarioController.update);
 
-// Deletar funcionário
+
 router.delete('/:id', verificaToken, verificaRole('admin'), funcionarioController.delete);
 
 export default router;

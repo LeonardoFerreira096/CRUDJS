@@ -1,14 +1,12 @@
-// src/routes/ordemServicoRoutes.js
 import express from 'express';
 import ordemServicoController from '../controllers/ordemServicoController.js';
 import { verificaToken, verificaRole } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Todas as rotas requerem autenticação
 router.use(verificaToken);
 
-// ==================== ROTAS PARA CLIENTE ====================
+
 router.post(
   '/cliente/solicitar',
   verificaRole('cliente'),
@@ -21,7 +19,7 @@ router.get(
   ordemServicoController.getByCliente
 );
 
-// ==================== FUNCIONÁRIO ====================
+
 router.get(
   '/funcionario/todas',
   verificaRole('funcionario', 'admin'),
@@ -40,7 +38,7 @@ router.patch(
   ordemServicoController.updateStatusByFuncionario
 );
 
-// ==================== ADMIN ====================
+
 router.get(
   '/clientes',
   verificaRole('funcionario', 'admin'),

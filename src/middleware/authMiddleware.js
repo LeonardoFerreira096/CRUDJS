@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 export const SECRET = process.env.JWT_SECRET || 'segredo :)';
 
-// Middleware para verificar se usuário está autenticado
+
 export function verificaToken(req, res, next) {
   const authHeader = req.headers.authorization;
 

@@ -17,26 +17,26 @@ if (!databaseUrl) {
     throw new Error("A variável de ambiente DATABASE_URL não está definida.");
 }
 
-// SINGLETON PATTERN - Evita múltiplas instâncias
+
 let prisma;
 
 if (process.env.NODE_ENV === 'production') {
-    // Em produção: uma instância única
+    
     prisma = new PrismaClient({
-        log: ['error'], // Apenas erros
+        log: ['error'], 
     });
 } else {
-    // Em desenvolvimento: reutiliza instância global
+    
     if (!global.prisma) {
         global.prisma = new PrismaClient({
-            log: ['query', 'error', 'warn'], // Logs detalhados para debug
-            errorFormat: 'pretty', // Erros mais legíveis
+            log: ['query', 'error', 'warn'], 
+            errorFormat: 'pretty', 
         });
     }
     prisma = global.prisma;
 }
 
-// Função de teste de conexão
+
 export async function testConnection() {
     try {
         await prisma.$connect();
@@ -48,7 +48,7 @@ export async function testConnection() {
     }
 }
 
-// Graceful shutdown - fecha conexão ao desligar servidor
+
 process.on('beforeExit', async () => {
     await prisma.$disconnect();
     console.log("🔌 Conexão com banco fechada");
