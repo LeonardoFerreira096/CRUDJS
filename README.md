@@ -1,31 +1,105 @@
-# Sistema de Gestão de Ordens de Serviço
+# 📅 DDE - Sistema de Agendamento
 
-## 📁 Arquitetura
-```
-src/
-├── controllers/     # Camada HTTP - recebe requisições
-├── services/        # Lógica de negócio e validações
-├── repositories/    # Acesso ao banco de dados (Prisma)
-├── routes/          # Definição de endpoints da API
-├── middleware/      # Interceptadores (autenticação, etc)
-└── config/          # Configurações (Prisma Client)
-```
+Sistema backend para gerenciamento de agendamentos, com autenticação JWT e integração com banco de dados PostgreSQL via Prisma ORM.
 
-## 🔐 Segurança
+---
 
-- Senhas criptografadas com bcrypt (12 rounds)
-- Validação de email único
-- Separação de responsabilidades
+## 🚀 Tecnologias
 
-## 🚀 Como rodar
+- **Node.js** - Ambiente de execução
+- **Express.js** - Framework web
+- **Prisma ORM** - Mapeamento objeto-relacional
+- **PostgreSQL** - Banco de dados relacional
+- **JWT** - Autenticação via token
+
+---
+
+## 🖥️ Frontend
+
+O frontend da aplicação está em um repositório separado:
+
+👉 [DDE - Frontend](https://github.com/LeonardoFerreira096/CRUD_Frontend)
+
+---
+
+## ⚙️ Pré-requisitos
+
+- Node.js instalado
+- PostgreSQL instalado e rodando
+- npm 
+
+---
+
+## 🛠️ Instalação
+
 ```bash
+# Clone o repositório
+git clone https://github.com/LeonardoFerreira096/CRUDJS
+cd dde
+
+# Instale as dependências
 npm install
-npx prisma migrate dev
-npm run dev
 ```
 
-## 🛠️ Tecnologias
+---
 
-- Node.js + Express
-- PostgreSQL + Prisma ORM
-- bcryptjs para hash de senhas
+## 🔧 Configuração
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```dotenv
+DATABASE_URL="postgresql://postgres:SUA_SENHA@localhost:5432/NOME_DO_BANCO"
+JWT_SECRET="sua_chave_secreta"
+PORT=3000
+```
+
+---
+
+## 🗃️ Banco de Dados
+
+```bash
+# Gerar o Prisma Client
+npx prisma generate
+
+# Aplicar as migrations
+npx prisma migrate dev
+```
+
+---
+
+## ▶️ Rodando o projeto
+
+```bash
+# Desenvolvimento
+npm run dev
+
+O servidor estará disponível em: `http://localhost:3000`
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+CRUDJS/
+├── node_modules/
+├── prisma/
+├── src/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── repositories/
+│   ├── routes/
+│   └── services/
+├── .env
+├── .env.example
+├── .gitignore
+├── index.js
+├── package.json
+├── prisma.config.js
+└── README.md 
+```
+
+## 📄 Licença
+
+Este projeto está sob a licença leonardo estudante de progamação.
+
